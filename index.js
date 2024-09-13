@@ -43,45 +43,44 @@ app.get('/download-pdf/:vin', async (req, res) => {
     }
 console.log(data.vhrHtml);
     // Launch Puppeteer with necessary flags
-  //   const browser = await puppeteer.launch({headless:false});
-  //   const page = await browser.newPage();
+    const browser = await puppeteer.launch({headless:false});
+    const page = await browser.newPage();
     
-  //   // Set the content of the page using the HTML from API response
-  //   await page.setContent(data.vhrHtml, { waitUntil: 'domcontentloaded' });
-  //   // await page.waitForSelector('#top-bar > div > div.right-header-bar-items > div > button > span');
-  //   // await page.click("#top-bar > div > div.right-header-bar-items > div > button > span");
+    // Set the content of the page using the HTML from API response
+    await page.setContent(data.vhrHtml, { waitUntil: 'domcontentloaded' });
+    // await page.waitForSelector('#top-bar > div > div.right-header-bar-items > div > button > span');
+    // await page.click("#top-bar > div > div.right-header-bar-items > div > button > span");
 
-  //   // await page.waitForSelector(".HistoryBasedValueSection");
-  //   // await page.click(".HistoryBasedValueSection");
+    // await page.waitForSelector(".HistoryBasedValueSection");
+    // await page.click(".HistoryBasedValueSection");
 
-  //  // await page.waitForSelector("div > div.modal_footer > div > div > button:nth-child(1)");
-  //  // await page.click(".modal_footer_actions button:first-child");
-  //    await page.emulateMediaType('print');
+   // await page.waitForSelector("div > div.modal_footer > div > div > button:nth-child(1)");
+   // await page.click(".modal_footer_actions button:first-child");
+     await page.emulateMediaType('print');
 
-  //   // // Simulate window.print()
-  //   await page.evaluate(() => {
-  //     window.print();
-  //   });
-  //   // Define PDF options and output to a buffer
-  //   const pdfBuffer = await page.pdf({
-  //     format: 'A4',              // A4 size
-  //     printBackground: true,     // Include background graphics
-  //     path: `${vin}.pdf`,
-  //   });
+    // // Simulate window.print()
+    await page.evaluate(() => {
+      window.print();
+    });
+    // Define PDF options and output to a buffer
+    const pdfBuffer = await page.pdf({
+      format: 'A4',              // A4 size
+      printBackground: true,     // Include background graphics
+      path: `${vin}.pdf`,
+    });
 
-  //   // Close Puppeteer
-  //   await browser.close();
+    // Close Puppeteer
+    await browser.close();
 
-  //   // Set response headers to indicate a file download
-  //   // res.set({
-  //   //   'Content-Type': 'application/pdf',
-  //   //   'Content-Disposition': `attachment; filename="${vin}.pdf"`,
-  //   // });
+    // Set response headers to indicate a file download
+    // res.set({
+    //   'Content-Type': 'application/pdf',
+    //   'Content-Disposition': `attachment; filename="${vin}.pdf"`,
+    // });
 
-  //   // Send the PDF buffer as the response
-  //   const file = `${vin}.pdf`;
-  //   res.download(file);
-  res.send(data.vhrHtml);
+    // Send the PDF buffer as the response
+    const file = `${vin}.pdf`;
+    res.download(file);
   } catch (err) {
     console.error('Error generating PDF:', err);
     res.status(500).send(err);
