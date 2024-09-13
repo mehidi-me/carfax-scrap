@@ -43,7 +43,8 @@ app.get('/download-pdf/:vin', async (req, res) => {
     }
 console.log(data.vhrHtml);
     // Launch Puppeteer with necessary flags
-    const browser = await puppeteer.launch({headless:false});
+    const browser = await puppeteer.launch({headless:true});
+    await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
     const page = await browser.newPage();
     
     // Set the content of the page using the HTML from API response
