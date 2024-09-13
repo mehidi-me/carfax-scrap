@@ -43,7 +43,9 @@ app.get('/download-pdf/:vin', async (req, res) => {
     }
 console.log(data.vhrHtml);
     // Launch Puppeteer with necessary flags
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.connect({
+      browserWSEndpoint: 'https://production-sfo.browserless.io/?token=QqMbRhFiZOeDGUe6a878a59dcfd621dd6fb473f063',
+    });
     const page = await browser.newPage();
     
     // Set the content of the page using the HTML from API response
