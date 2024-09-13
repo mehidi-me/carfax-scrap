@@ -58,6 +58,12 @@ console.log(data.vhrHtml);
 
    // await page.waitForSelector("div > div.modal_footer > div > div > button:nth-child(1)");
    // await page.click(".modal_footer_actions button:first-child");
+   await page.evaluate(() => {
+    const element = document.querySelector('.print-only-report-provided-by-snackbar');
+    if (element) {
+      element.remove();
+    }
+  });
      await page.emulateMediaType('print');
 
     // // Simulate window.print()
