@@ -83,7 +83,7 @@ console.log(data.vhrHtml);
     res.download(file);
   } catch (err) {
     console.error('Error generating PDF:', err);
-    res.status(500).send('Error generating PDF');
+    res.status(500).send(err);
   }
 });
 
