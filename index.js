@@ -6,6 +6,9 @@ import fetch from 'node-fetch';
 const app = express();
 const port = 7800;
 
+// Serve static files from the 'public' directory
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 // Route to generate and download the PDF
 app.get('/get-report/:vin/:auth', async (req, res) => {
   const vin = req.params.vin;
@@ -110,7 +113,7 @@ console.log(data.vhrHtml);
     const pdfBuffer = await page.pdf({
       format: 'A4',              // A4 size
       printBackground: true,     // Include background graphics
-      path: `${vin}.pdf`,
+      path: `public/${vin}.pdf`,
     });
 
     // Close Puppeteer
@@ -123,8 +126,9 @@ console.log(data.vhrHtml);
     // });
 
     // Send the PDF buffer as the response
-    const file = `${vin}.pdf`;
-    res.download(file);
+    // const file = `${vin}.pdf`;
+    // res.download(file);
+    return res.status(200).send({path: `public/${vin}.pdf`,status:true})
   } catch (err) {
     console.error('Error generating PDF:', err);
     res.status(500).send(err);
