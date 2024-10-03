@@ -12,7 +12,6 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 
-# Ensure the directory has write permissions
-RUN chmod -R 777 /usr/src/app/public/html
+
 
 CMD [ "node", "index.js" ]
