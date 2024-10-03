@@ -4,12 +4,14 @@ import path from "path";
 import puppeteer from "puppeteer";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const port = 7800;
-require("dotenv").config();
+
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
