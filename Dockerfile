@@ -8,4 +8,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
+
+# Ensure the directory has write permissions
+RUN mkdir -p /usr/src/app/public/html && chmod -R 777 /usr/src/app/public/html
+
 CMD [ "node", "index.js" ]
