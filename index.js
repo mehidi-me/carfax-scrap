@@ -57,11 +57,19 @@ app.get("/download-pdf/:vin/:auth", async (req, res) => {
       console.log("HTML file created successfully!");
     });
 
-    const browser = await puppeteer.launch({
-      headless: true,
-      defaultViewport: null,
+    // const browser = await puppeteer.launch({
+    //   headless: true,
+    //   defaultViewport: null,
+    //   args: ["--window-size=1920,1080"],
+    // });
+
+    browser = await puppeteer.connect({browserWSEndpoint:
+      'wss://chrome-v2.browsercloud.io?'+
+      'token=0pdmxqFArUEzh39H'+
+      '&proxy=datacenter'+ //proxy type (optional): residential / datacenter
+      '&proxyCountry=US', //proxy country (optional)
       args: ["--window-size=1920,1080"],
-    });
+  });
     const page = await browser.newPage();
 
     await page.goto(`${fullUrl}/public/html/${vin}.html`, {
