@@ -9,6 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const port = 7800;
+require("dotenv").config();
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
@@ -63,13 +64,18 @@ app.get("/download-pdf/:vin/:auth", async (req, res) => {
     //   args: ["--window-size=1920,1080"],
     // });
 
-   const browser = await puppeteer.connect({browserWSEndpoint:
-      'wss://chrome-v2.browsercloud.io?'+
-      'token=0pdmxqFArUEzh39H'+
-      '&proxy=datacenter'+ //proxy type (optional): residential / datacenter
-      '&proxyCountry=US', //proxy country (optional)
-      args: ["--window-size=1920,1080"],
-  });
+    const browser = await puppeteer.launch({
+      args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
+    });
     const page = await browser.newPage();
 
     await page.goto(`${fullUrl}/public/html/${vin}.html`, {
