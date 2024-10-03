@@ -63,7 +63,7 @@ app.get("/download-pdf/:vin/:auth", async (req, res) => {
     //   args: ["--window-size=1920,1080"],
     // });
 
-    browser = await puppeteer.connect({browserWSEndpoint:
+   const browser = await puppeteer.connect({browserWSEndpoint:
       'wss://chrome-v2.browsercloud.io?'+
       'token=0pdmxqFArUEzh39H'+
       '&proxy=datacenter'+ //proxy type (optional): residential / datacenter
